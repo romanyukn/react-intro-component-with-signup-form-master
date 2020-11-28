@@ -16,15 +16,28 @@ function LoginForm() {
     const [fields, setFields] = useState(initialState);
 
     return (
-      <div>
-        <form>
-            <FormField />
-            <button>
-                CLAIM YOUR FREE TRIAL
-            </button>
-        </form> 
+      <div className="container">
+        <div className="row">
+            <div className="col-6 p-5">
+            <h1>Learn to code by watching others</h1>
+            See how experienced developer solve problems in real-time. Watching
+            scripted tutorials is great, but understanding how developers think is
+            invaluable.
+            </div>
+            <div className="col-6 p-5">
+                <div className="frame">  
+                    <form>
+                        <FormField />
+                        <button>
+                            CLAIM YOUR FREE TRIAL
+                        </button>
+                    </form>
+                </div>    
+            </div> 
+        </div>
       </div>
     );
   }
 
   export default LoginForm;
+
