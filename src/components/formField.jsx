@@ -7,7 +7,11 @@ function FormField(props) {
                 type="text"
                 className="form-control"
                 id="formGroupExampleInput"
+                name={props.name}
+                value={props.value}
+                isValid={props.isValid}
                 placeholder={props.name}
+                onChange={props.onChange}
             />
             <div className="invalid-feedback"></div>
         </div>

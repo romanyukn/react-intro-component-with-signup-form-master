@@ -12,8 +12,16 @@ const initialState = [
    creatField("Password")
 ]
 
+function handleSubmit(e) {
+    e.preventDefault();
+}
+
 function LoginForm() {
     const [fields, setFields] = useState(initialState);
+
+    function onInputChange(e) {
+       console.log({name: e.target.name, value: e.target.value, isValid: e.target.isValid});
+    }
 
     return (
       <div className="container">
@@ -26,8 +34,17 @@ function LoginForm() {
             </div>
             <div className="col-6 p-5">
                 <div className="frame">  
-                    <form>
-                        {fields.map((el) => {return <FormField key={el.name} name={el.name} isValid={el.isValid}/>})}
+                    <form onSubmit={handleSubmit}>
+                        {fields.map((el) => {
+                            return <FormField 
+                                key={el.name} 
+                                name={el.name} 
+                                value={el.value}
+                                isValid={el.isValid}
+                                onChange={onInputChange}
+                                />}
+                            )
+                        }
                         <button className="btn btn-success btn-lg btn-block">
                             CLAIM YOUR FREE TRIAL
                         </button>
