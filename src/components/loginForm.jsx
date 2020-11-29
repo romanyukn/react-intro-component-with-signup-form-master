@@ -2,7 +2,7 @@ import React, {setState, useState} from 'react';
 import FormField from './formField';
 
 function creatField(name) {
-   return {name: name, value: null, isValid: true};
+   return {name: name, value: "", isValid: true};
 }
 
 const initialState = [
@@ -27,8 +27,8 @@ function LoginForm() {
             <div className="col-6 p-5">
                 <div className="frame">  
                     <form>
-                        <FormField />
-                        <button>
+                        {fields.map((el) => {return <FormField key={el.name} name={el.name} isValid={el.isValid}/>})}
+                        <button className="btn btn-success btn-lg btn-block">
                             CLAIM YOUR FREE TRIAL
                         </button>
                     </form>

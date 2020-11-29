@@ -1,13 +1,13 @@
 import React from 'react';
 
-function FormField() {
+function FormField(props) {
     return(
         <div className="form-group">
             <input
                 type="text"
                 className="form-control"
                 id="formGroupExampleInput"
-                placeholder="First name"
+                placeholder={props.name}
             />
             <div className="invalid-feedback"></div>
         </div>

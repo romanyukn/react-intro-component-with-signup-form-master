@@ -1,0 +1,5 @@
+body {
+  background: hsl(0, 100%, 74%, 0.9);
+  background-image: url("./images/bg-intro-desktop.png");
+  font-family: "Poppins", sans-serif;
+}
