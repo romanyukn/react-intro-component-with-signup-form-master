@@ -20,10 +20,15 @@ function LoginForm() {
     const [fields, setFields] = useState(initialState);
 
     function onInputChange(eachField) {
-        console.log(eachField);
-       if (fields.name === eachField.name) {
-           setFields({name: eachField.name, value: eachField.value, isValid: eachField.isValid});
-       } 
+        const dataFields = fields.map((el) => {
+            if (el.name === eachField.name) {
+                return ({name: eachField.name, value: eachField.value, isValid: eachField.isValid});
+            }
+            else {
+                return (el);
+            } 
+        })
+        setFields(dataFields); 
     }
 
     return (
