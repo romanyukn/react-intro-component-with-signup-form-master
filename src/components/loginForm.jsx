@@ -1,4 +1,4 @@
-import React, {setState, useState} from 'react';
+import React, {useState} from 'react';
 import FormField from './formField';
 
 function creatField(name) {
@@ -19,8 +19,11 @@ function handleSubmit(e) {
 function LoginForm() {
     const [fields, setFields] = useState(initialState);
 
-    function onInputChange(e) {
-       console.log({name: e.target.name, value: e.target.value, isValid: e.target.isValid});
+    function onInputChange(eachField) {
+        console.log(eachField);
+       if (fields.name === eachField.name) {
+           setFields({name: eachField.name, value: eachField.value, isValid: eachField.isValid});
+       } 
     }
 
     return (

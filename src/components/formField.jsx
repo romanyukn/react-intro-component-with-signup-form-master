@@ -9,9 +9,9 @@ function FormField(props) {
                 id="formGroupExampleInput"
                 name={props.name}
                 value={props.value}
-                isValid={props.isValid}
+                isvalid={props.isValid}
                 placeholder={props.name}
-                onChange={props.onChange}
+                onChange={(e) => props.onChange({name: props.name, value: e.target.value, isValid: props.isValid})}
             />
             <div className="invalid-feedback"></div>
         </div>
