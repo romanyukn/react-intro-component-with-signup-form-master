@@ -18,7 +18,7 @@ function LoginForm() {
     function onInputChange(eachField) {
         const dataFields = fields.map((el) => {
             if (el.name === eachField.name) {
-                return ({name: eachField.name, value: eachField.value, isValid: eachField.isValid, className: eachField.className});
+                return eachField;
             }
             else {
                 return (el);

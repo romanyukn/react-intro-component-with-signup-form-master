@@ -1,19 +1,19 @@
 import React from 'react';
 
-function FormField(props) {
+function FormField({name, value, isValid, className, onChange}) {
     return(
         <div className="form-group">
             <input
                 type="text"
-                className={props.className}
+                className={className}
                 id="formGroupExampleInput"
-                name={props.name}
-                value={props.value}
-                isvalid={props.isValid}
-                placeholder={props.name}
-                onChange={(e) => props.onChange({name: props.name, value: e.target.value, isValid: props.isValid, className: props.className})}
+                name={name}
+                value={value}
+                isvalid={isValid}
+                placeholder={name}
+                onChange={(e) => onChange({name, value, isValid, className, value: e.target.value})}
             />
-            {!props.isValid && <div className="invalid-feedback">{props.name} cannot be empty</div>}
+            {!isValid && <div className="invalid-feedback">{name} cannot be empty</div>}
         </div>
     )
 }
