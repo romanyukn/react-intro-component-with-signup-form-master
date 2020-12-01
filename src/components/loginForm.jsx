@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import FormField from './formField';
 
 function creatField(name) {
-   return {name: name, value: "", isValid: true};
+   return {name: name, value: "", isValid: true, className: "form-control"};
 }
 
 const initialState = [
@@ -12,23 +12,35 @@ const initialState = [
    creatField("Password")
 ]
 
-function handleSubmit(e) {
-    e.preventDefault();
-}
-
 function LoginForm() {
     const [fields, setFields] = useState(initialState);
 
     function onInputChange(eachField) {
         const dataFields = fields.map((el) => {
             if (el.name === eachField.name) {
-                return ({name: eachField.name, value: eachField.value, isValid: eachField.isValid});
+                return ({name: eachField.name, value: eachField.value, isValid: eachField.isValid, className: eachField.className});
             }
             else {
                 return (el);
             } 
         })
         setFields(dataFields); 
+    }
+
+    function validate(fieldsToValidate) {
+        const validated = fieldsToValidate.map((fieldToValidate) => {
+            if(fieldToValidate.value === "") {
+                return ({...fieldToValidate, className: "form-control is-invalid", isValid: false})
+            } else {
+                return ({...fieldToValidate, isValid: true, className: "form-control"})
+            }
+        })
+        setFields(validated);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        validate(fields);
     }
 
     return (
@@ -49,6 +61,7 @@ function LoginForm() {
                                 name={el.name} 
                                 value={el.value}
                                 isValid={el.isValid}
+                                className={el.className}
                                 onChange={onInputChange}
                                 />}
                             )
