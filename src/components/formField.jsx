@@ -13,7 +13,7 @@ function FormField(props) {
                 placeholder={props.name}
                 onChange={(e) => props.onChange({name: props.name, value: e.target.value, isValid: props.isValid, className: props.className})}
             />
-            <div className="invalid-feedback"></div>
+            {!props.isValid && <div className="invalid-feedback">{props.name} cannot be empty</div>}
         </div>
     )
 }
