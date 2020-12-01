@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import FormField from './formField';
 
 function creatField(name) {
-   return {name: name, value: "", isValid: true, className: "form-control"};
+   return {name: name, value: "", isValid: true, eMail: true, className: "form-control"};
 }
 
 const initialState = [
@@ -14,6 +14,7 @@ const initialState = [
 
 function LoginForm() {
     const [fields, setFields] = useState(initialState);
+    const emailCheck = /^\S+@\S+\.\S+$/
 
     function onInputChange(eachField) {
         const dataFields = fields.map((el) => {
@@ -30,12 +31,18 @@ function LoginForm() {
     function validate(fieldsToValidate) {
         const validated = fieldsToValidate.map((fieldToValidate) => {
             if(fieldToValidate.value === "") {
-                return ({...fieldToValidate, className: "form-control is-invalid", isValid: false})
-            } else {
-                return ({...fieldToValidate, isValid: true, className: "form-control"})
-            }
+                return ({...fieldToValidate, className: "form-control is-invalid", isValid: false, eMail: true})
+            } else if (fieldToValidate.name === "Email Address"){
+                return validateEmail(fieldToValidate);   
+            } return ({...fieldToValidate, isValid: true, eMail: true, className: "form-control"})
         })
         setFields(validated);
+    }
+
+    function validateEmail(el) {
+        if (!emailCheck.test(el.value)) {
+            return ({...el, className: "form-control is-invalid", isValid: true, eMail: false});
+        }
     }
 
     function handleSubmit(e) {
@@ -61,6 +68,7 @@ function LoginForm() {
                                 name={el.name} 
                                 value={el.value}
                                 isValid={el.isValid}
+                                eMail={el.eMail}
                                 className={el.className}
                                 onChange={onInputChange}
                                 />}
