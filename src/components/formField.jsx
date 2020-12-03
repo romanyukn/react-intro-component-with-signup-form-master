@@ -1,6 +1,7 @@
 import React from 'react';
 
-function FormField({name, value, isValid, error, className, onChange, onFocus}) {
+function FormField(props) {
+    const {name, value, isValid, className, error, onChange, onFocus} = props;
     return(
         <div className="form-group">
             <input
@@ -11,7 +12,7 @@ function FormField({name, value, isValid, error, className, onChange, onFocus}) 
                 value={value}
                 isvalid={isValid}
                 placeholder={name}
-                onChange={(e) => onChange({name, value, isValid, className, value: e.target.value})}
+                onChange={(e) => onChange({...props, value: e.target.value})}
                 onFocus={() => onFocus(name)}
             />
             {!isValid && <div className="invalid-feedback">{error}</div>}
