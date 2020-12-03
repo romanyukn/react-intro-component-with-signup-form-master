@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FormField({name, value, isValid, eMail, className, onChange}) {
+function FormField({name, value, isValid, error, className, onChange, onFocus}) {
     return(
         <div className="form-group">
             <input
@@ -11,10 +11,11 @@ function FormField({name, value, isValid, eMail, className, onChange}) {
                 value={value}
                 isvalid={isValid}
                 placeholder={name}
-                onChange={(e) => onChange({name, value, isValid, eMail, className, value: e.target.value})}
+                onChange={(e) => onChange({name, value, isValid, className, value: e.target.value})}
+                onFocus={() => onFocus(name)}
             />
-            {!isValid && <div className="invalid-feedback">{name} cannot be empty</div>}
-            {!eMail && <div className="invalid-feedback">It doesn't look like e-mail</div>}
+            {!isValid && <div className="invalid-feedback">{error}</div>}
+            
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import FormField from './formField';
 
 function creatField(name) {
-   return {name: name, value: "", isValid: true, eMail: true, className: "form-control"};
+   return {name: name, value: "", isValid: true, className: "form-control", error: ""};
 }
 
 const initialState = [
@@ -31,17 +31,43 @@ function LoginForm() {
     function validate(fieldsToValidate) {
         const validated = fieldsToValidate.map((fieldToValidate) => {
             if(fieldToValidate.value === "") {
-                return ({...fieldToValidate, className: "form-control is-invalid", isValid: false, eMail: true})
+                return ({...fieldToValidate, className: "form-control is-invalid", isValid: false, error: `${fieldToValidate.name} cannot be empty`})
             } else if (fieldToValidate.name === "Email Address"){
                 return validateEmail(fieldToValidate);   
-            } return ({...fieldToValidate, isValid: true, eMail: true, className: "form-control"})
+            } return ({...fieldToValidate, isValid: true, className: "form-control"})
         })
         setFields(validated);
     }
 
     function validateEmail(el) {
         if (!emailCheck.test(el.value)) {
-            return ({...el, className: "form-control is-invalid", isValid: true, eMail: false});
+            return ({...el, className: "form-control is-invalid", isValid: false, error: "It doesn't look like an e-mail"});
+        }
+    }
+
+    function handleFocus(fieldName) {
+        const fieldsChanged = fields.map((el) => {
+            if(el.name === fieldName) {
+                return ({...el, isValid: true, className: "form-control"})
+            } else {
+                return (el);
+            }
+        })
+        setFields(fieldsChanged);
+    }
+
+    function validForm() {
+        const isValidFields = fields.map((el) => el.isValid);
+        console.log(isValidFields);
+        return isValidFields.every((el) => el === true);
+    }
+
+    function cleanForm() {
+        if (validForm()) {
+            const cleanedForm = fields.map((el) => {
+                return ({...el, value: ""});
+            })
+            setFields(cleanedForm);
         }
     }
 
@@ -68,9 +94,10 @@ function LoginForm() {
                                 name={el.name} 
                                 value={el.value}
                                 isValid={el.isValid}
-                                eMail={el.eMail}
+                                error={el.error}
                                 className={el.className}
                                 onChange={onInputChange}
+                                onFocus={handleFocus}
                                 />}
                             )
                         }
