@@ -5,19 +5,22 @@ function creatField(name) {
    return {name: name, value: "", isValid: true, className: "form-control", error: ""};
 }
 
-const initialState = [
-   creatField("First Name"),
+const initialState = {
+   fields:[creatField("First Name"),
    creatField("Last Name"),
    creatField("Email Address"),
-   creatField("Password")
-]
+   creatField("Password")],
+   isSubmitted: false,
+   isValidated: false,
+   isValid: false
+}
 
 function LoginForm() {
-    const [fields, setFields] = useState(initialState);
+    const [state, setState] = useState(initialState);
     const emailCheck = /^\S+@\S+\.\S+$/
 
     function onInputChange(eachField) {
-        const dataFields = fields.map((el) => {
+        const dataFields = state.fields.map((el) => {
             if (el.name === eachField.name) {
                 return eachField;
             }
@@ -25,7 +28,7 @@ function LoginForm() {
                 return (el);
             } 
         })
-        setFields(dataFields); 
+        setState({...state, fields: dataFields}); 
     }
 
     function validate(fieldsToValidate) {
@@ -36,7 +39,7 @@ function LoginForm() {
                 return validateEmail(fieldToValidate);   
             } return ({...fieldToValidate, isValid: true, className: "form-control"})
         })
-        setFields(validated);
+        setState({...state, fields: validated});
     }
 
     function validateEmail(el) {
@@ -46,34 +49,33 @@ function LoginForm() {
     }
 
     function handleFocus(fieldName) {
-        const fieldsChanged = fields.map((el) => {
+        const fieldsChanged = state.fields.map((el) => {
             if(el.name === fieldName) {
                 return ({...el, isValid: true, className: "form-control"})
             } else {
                 return (el);
             }
         })
-        setFields(fieldsChanged);
+        setState({...state, fields: fieldsChanged});
     }
 
     function validForm() {
-        const isValidFields = fields.map((el) => el.isValid);
-        console.log(isValidFields);
+        const isValidFields = state.fields.map((el) => el.isValid);
         return isValidFields.every((el) => el === true);
     }
 
     function cleanForm() {
         if (validForm()) {
-            const cleanedForm = fields.map((el) => {
+            const cleanedForm = state.fields.map((el) => {
                 return ({...el, value: ""});
             })
-            setFields(cleanedForm);
+            setState({...state, fields: cleanedForm});
         }
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        validate(fields);
+        validate(state.fields);
     }
 
     return (
@@ -88,7 +90,7 @@ function LoginForm() {
             <div className="col-6 p-5">
                 <div className="frame">  
                     <form onSubmit={handleSubmit}>
-                        {fields.map((el) => {
+                        {state.fields.map((el) => {
                             return <FormField 
                                 key={el.name} 
                                 name={el.name} 
